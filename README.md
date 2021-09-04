@@ -11,4 +11,4 @@ Users will be able to add the music on the database to their particular list, se
 3. User Playlist/Wishlist (Solo interaction)
 
 >User2 Fucntions
-EX. Artist/Mod Function(Add songs)
+1. Artist/Mod Function(Add songs)
