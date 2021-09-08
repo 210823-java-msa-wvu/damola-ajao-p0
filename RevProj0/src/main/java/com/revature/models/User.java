@@ -37,6 +37,14 @@ public class User {
         this.password = password;
     }
 
+    public Boolean getUploader() {
+        return Uploader;
+    }
+
+    public void setUploader(Boolean uploader) {
+        Uploader = uploader;
+    }
+
     @Override
     public String toString() {
         return "User{" +
