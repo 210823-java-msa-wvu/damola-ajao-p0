@@ -1,19 +1,40 @@
 package com.revature.models;
 
+import java.sql.Date;
+
 public class Song {
     private Integer id;
     private String title;
     private String artist;
     private String genre;
-    private String releaseDate;
+    private Date releaseDate;
 
-    public Song(Integer id, String title, String artist, String genre, String releaseDate) {
+    public Song(){
+
+    }
+//    public Song() {
+//        this.id = id;
+//        this.title = title;
+//        this.artist = artist;
+//        this.genre = genre;
+//        this.releaseDate = releaseDate;
+//    }
+
+    public Song(String title, String artist, String genre) {
+        this.title = title;
+        this.artist = artist;
+        this.genre = genre;
+    }
+
+    public Song(Integer id, String title, String artist, String genre, Date releaseDate) {
         this.id = id;
         this.title = title;
         this.artist = artist;
         this.genre = genre;
         this.releaseDate = releaseDate;
     }
+
+
 
     public Integer getId() {
         return id;
@@ -47,11 +68,11 @@ public class Song {
         this.genre = genre;
     }
 
-    public String getReleaseDate() {
+    public Date getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(String releaseDate) {
+    public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
     }
 

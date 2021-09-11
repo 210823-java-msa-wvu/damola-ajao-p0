@@ -21,11 +21,15 @@ public class UserServices {
         if (u != null) {
             // now check to make sure it matches
             if (username.equals(u.getUsername()) && password.equals(u.getPassword())) {
+                System.out.println("Access granted");
                 return true;
             }
-        }
-        return false;
+        } else{
+            System.out.println("Access denied");
+            return false;
+        }return false;
     }
+
 
 }
 

@@ -2,7 +2,6 @@ package com.revature.repositories;
 
 import com.revature.models.User;
 import com.revature.utils.ConnectionUtil;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,19 +26,19 @@ public class UserRepo implements CrudRepository<User>{
 
         try (Connection conn = cu.getConnection()) {
 
-            String sql = "select * from users where username = ?";
+            String sql = "select * from login_info where Username = ?";
 
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, username);
+            ps.setString(1,username);
 
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
                 User u = new User(
-                        rs.getInt("id"),
-                        rs.getString("username"),
-                        rs.getString("password"),
-                        rs.getUploader(  )
+                        rs.getInt("UserId"),
+                        rs.getString("Username"),
+                        rs.getString("Password"),
+                        rs.getBoolean("Uploader")
                 );
                 return u;
             }

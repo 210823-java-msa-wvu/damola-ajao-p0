@@ -13,6 +13,9 @@ public class User {
         Uploader = uploader;
     }
 
+    public User(int id, String username, String password) {
+    }
+
     public Integer getId() {
         return id;
     }
