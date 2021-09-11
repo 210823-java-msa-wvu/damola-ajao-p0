@@ -18,7 +18,7 @@ public class SongRepo implements CrudRepository<Song>{
         try (Connection conn = cu.getConnection()) {
 
 
-            String sql = "insert into Songs (\"SongId\" , \"Title\", \"Artist\" ,\"Genre\", \"Release Date\") values (?, ?, ?, ?, ?) returning *";
+            String sql = "insert into songs (\"songid\" , \"title\", \"artist\" ,\"genre\", \"release date\") values (?, ?, ?, ?, ?) returning *";
 
             PreparedStatement ps = conn.prepareStatement(sql);
 //            ps.setString(a.s);
@@ -26,10 +26,10 @@ public class SongRepo implements CrudRepository<Song>{
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                a.setId(rs.getInt("SongId"));
-                a.setTitle(rs.getString("Title"));
-                a.setArtist(rs.getString("Artist"));
-                a.setGenre(rs.getString("Genre"));
+                a.setId(rs.getInt("songid"));
+                a.setTitle(rs.getString("title"));
+                a.setArtist(rs.getString("artist"));
+                a.setGenre(rs.getString("genre"));
                 a.setReleaseDate(rs.getDate("01-01-2001"));
                 return a;
             }
@@ -45,7 +45,7 @@ public class SongRepo implements CrudRepository<Song>{
     @Override
     public Song getById(Integer id) { try (Connection conn = cu.getConnection()) {
 
-        String sql = "select * from Songs where SongId = ?";
+        String sql = "select * from songs where songid = ?";
 
         PreparedStatement ps = conn.prepareStatement(sql); // Setting up our SQL statement in this way helps prevent SQL Injection Attacks
         ps.setInt(1, id); // parameter Indexes start from 1 (NOT 0)
@@ -54,10 +54,10 @@ public class SongRepo implements CrudRepository<Song>{
 
         if (rs.next()) {
             Song a = new Song();
-            a.setId(rs.getInt("SongId"));
-            a.setTitle(rs.getString("Title"));
-            a.setArtist(rs.getString("Artist"));
-            a.setGenre(rs.getString("Genre"));
+            a.setId(rs.getInt("songid"));
+            a.setTitle(rs.getString("title"));
+            a.setArtist(rs.getString("artist"));
+            a.setGenre(rs.getString("genre"));
             a.setReleaseDate(rs.getDate("01-01-2001"));
 
             return a;
@@ -76,18 +76,18 @@ public class SongRepo implements CrudRepository<Song>{
         List<Song> songs = new ArrayList<>();
 
         try(Connection conn = cu.getConnection()) {
-            String sql = "select * from Songs where SongId = ?";
+            String sql = "select * from songs where songid = ?";
             PreparedStatement ps = conn.prepareStatement(sql); // Setting up our SQL statement in this way helps prevent SQL Injection Attacks
             // ps.setInt(1, ); // parameter Indexes start from 1 (NOT 0)
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Song a = new Song(
-                        rs.getInt("SongId"),
-                        rs.getString("Title"),
-                        rs.getString("Artist"),
-                        rs.getString("Genre"),
-                        rs.getDate("Release")
+                        rs.getInt("songid"),
+                        rs.getString("title"),
+                        rs.getString("artist"),
+                        rs.getString("genre"),
+                        rs.getDate("release")
                 );
                 songs.add(a);
             }
@@ -105,7 +105,7 @@ public class SongRepo implements CrudRepository<Song>{
     public void update(Song song) {
         try (Connection conn = cu.getConnection()) {
 
-            String sql = "update authors set first_name = ?, last_name = ? where id = ?";
+            String sql = "update songs set first_name = ?, last_name = ? where id = ?";
 
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, song.getId());

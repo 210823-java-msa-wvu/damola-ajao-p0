@@ -26,7 +26,7 @@ public class UserRepo implements CrudRepository<User>{
 
         try (Connection conn = cu.getConnection()) {
 
-            String sql = "select * from login_info where Username = ?";
+            String sql = "select * from login_info where username = ?";
 
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1,username);
@@ -35,10 +35,10 @@ public class UserRepo implements CrudRepository<User>{
 
             if (rs.next()) {
                 User u = new User(
-                        rs.getInt("UserId"),
-                        rs.getString("Username"),
-                        rs.getString("Password"),
-                        rs.getBoolean("Uploader")
+                        rs.getInt("userid"),
+                        rs.getString("username"),
+                        rs.getString("password"),
+                        rs.getBoolean("uploader")
                 );
                 return u;
             }

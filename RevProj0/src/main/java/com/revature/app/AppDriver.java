@@ -41,8 +41,18 @@ public class AppDriver {
 
                 if (signInResponse) {
                     System.out.println("Successfully logged in...");
+                    ///Continue to Song listing,
+//                    case 1: {
+//
+//                        break;
+//
+//                    }
+                    // Platform availability
+                    // Playlist view, Playlist make,
+                    // Extra user notification
                 } else {
                     System.out.println("Credentials do not match. ");
+                    System.out.println("Please try again. ");
                 }
                 break;
             }
