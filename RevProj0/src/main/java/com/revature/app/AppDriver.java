@@ -9,20 +9,17 @@ public class AppDriver {
 
     public static Scanner scanner = new Scanner(System.in);
 
+    public boolean running = true;
+
     private static UserServices userServices = new UserServices();
-
-    //private static SongRepo songRepo = new SongRepo();
-
 
     public static void main(String[] args) {
 
-        //System.out.println(bookRepo.getAll());
-        //bookRepo.getAll().forEach(System.out::println);
-
-        System.out.println("Welcome!\nPlease choose an option below");
+        System.out.println("Welcome to the Music Database!\nPlease choose an option below");
         System.out.println("1. Login\n2. Register account\n3. Quit");
 
         int input = scanner.nextInt();
+
 
         switch (input) {
 
@@ -52,7 +49,7 @@ public class AppDriver {
                     // Extra user notification
                 } else {
                     System.out.println("Credentials do not match. ");
-                    System.out.println("Please try again. ");
+                    System.out.println("Please do not try again. ");
                 }
                 break;
             }
