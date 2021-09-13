@@ -1,6 +1,7 @@
 package com.revature.repositories;
 
 import com.revature.models.Platform;
+import com.revature.models.User;
 
 import java.util.List;
 
@@ -20,6 +21,11 @@ public class PlatformRepo implements CrudRepository<Platform> {
 
     @Override
     public List<Platform> getAll() {
+        return null;
+    }
+
+    @Override
+    public List<User> getAllUser() {
         return null;
     }
 

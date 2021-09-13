@@ -1,5 +1,7 @@
 package com.revature.repositories;
 
+import com.revature.models.User;
+
 import java.util.List;
 
 // A generic type is a class or interface that is parameterizes over types.
@@ -13,6 +15,8 @@ public interface CrudRepository<T> {
     T getById(Integer id);
 
     List<T> getAll();
+
+    List<User> getAllUser();
 
     // Update
     void update(T t);

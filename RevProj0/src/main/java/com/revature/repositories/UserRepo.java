@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserRepo implements CrudRepository<User>{
@@ -14,11 +15,77 @@ public class UserRepo implements CrudRepository<User>{
 
     @Override
     public User add(User user) {
+//        try (Connection conn = cu.getConnection()) {
+//
+//            String sql = "insert into login_info (userid, username, password, uploader) values ( ?, ?, ?, false);";
+//
+//            PreparedStatement ps = conn.prepareStatement(sql);
+//            ps.setString(1,user.getUsername());
+//            ps.setString(1, user.getPassword());
+//
+//            User created = User this.user;
+//            return created;
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//
+//
+//        return false;
         return null;
+    }
+
+    public Boolean createAUser(User user){
+                try (Connection conn = cu.getConnection()) {
+
+            String sql = "insert into login_info (userid, username, password, uploader) values ( ?, ?, ?, false);";
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1,user.getUsername());
+            ps.setString(1, user.getPassword());
+
+            return ps.executeUpdate() != 0;
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+        return false;
     }
 
     @Override
     public User getById(Integer id) {
+        return null;
+    }
+
+    @Override
+    public List<User> getAll() {
+//        List<User> users = new ArrayList<>();
+//
+//        try(Connection conn = cu.getConnection()){
+//
+//            String sql = "SELECT * FROM login_info;";
+//
+//            PreparedStatement ps = conn.prepareStatement(sql);
+//
+//            //this is wh
+//            ResultSet rs = ps.executeQuery();
+//
+//
+//            //this is iterating through the records
+//            while(rs.next()) {
+//                users.add(
+//                        new User(rs.getInt(1), rs.getString(2), rs.getString(3),rs.getBoolean(4))
+//                );
+//            }
+//
+//        }catch(SQLException e) {
+//            e.printStackTrace();
+//        }
+
+        //return users;
         return null;
     }
 
@@ -56,8 +123,31 @@ public class UserRepo implements CrudRepository<User>{
     }
 
     @Override
-    public List<User> getAll() {
-        return null;
+    public List<User> getAllUser() {
+        List<User> users = new ArrayList<>();
+
+        try(Connection conn = cu.getConnection()){
+
+            String sql = "SELECT * FROM login_info;";
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            //this is wh
+            ResultSet rs = ps.executeQuery();
+
+
+            //this is iterating through the records
+            while(rs.next()) {
+                users.add(
+                        new User(rs.getInt(1), rs.getString(2), rs.getString(3),rs.getBoolean(4))
+                );
+            }
+
+        }catch(SQLException e) {
+            e.printStackTrace();
+        }
+
+        return users;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.revature.repositories;
 
 import com.revature.models.Playlist;
+import com.revature.models.User;
 
 import java.util.List;
 
@@ -39,6 +40,11 @@ public class PlaylistRepo implements CrudRepository<Playlist> {
 
     @Override
     public List<Playlist> getAll() {
+        return null;
+    }
+
+    @Override
+    public List<User> getAllUser() {
         return null;
     }
 

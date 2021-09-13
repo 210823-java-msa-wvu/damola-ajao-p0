@@ -1,6 +1,7 @@
 package com.revature.repositories;
 
 import com.revature.models.Song;
+import com.revature.models.User;
 import com.revature.utils.ConnectionUtil;
 
 import java.sql.Connection;
@@ -97,6 +98,11 @@ public class SongRepo implements CrudRepository<Song>{
             e.printStackTrace();
 
         }
+        return null;
+    }
+
+    @Override
+    public List<User> getAllUser() {
         return null;
     }
 

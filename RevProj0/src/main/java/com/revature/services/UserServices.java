@@ -3,6 +3,8 @@ package com.revature.services;
 import com.revature.models.User;
 import com.revature.repositories.UserRepo;
 
+import java.util.List;
+
 // Where we are going to put any business logic needed for the application to function the way we want.
 // Specifically any services that need to be available to our users.
 public class UserServices {
@@ -34,6 +36,18 @@ public class UserServices {
         }return false;
     }
 
+    List<User> getAllToDos() {
+        return null;
+    }
+
+//    public List<User> getAllUser(){
+//        List<User> users = UserRepo.
+//
+//        if(this.userRepo.createAUser(user))
+//            System.out.println(user.getUsername() + " now has access.");
+//        else
+//            System.out.println("Could not add user to database. An error has occurred");
+//    }
     //View all songs
 
     //

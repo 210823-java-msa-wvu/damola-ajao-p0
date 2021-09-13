@@ -38,6 +38,12 @@ public class AppDriver {
 
                 if (signInResponse) {
                     System.out.println("Successfully logged in...");
+
+                    System.out.println("View all Songs");
+                    System.out.println("View song platform availability");
+                    System.out.println("View playlist");
+                    System.out.println("Add to playlist");
+                    System.out.println("Delete playlist");
                     ///Continue to Song listing,
 //                    case 1: {
 //
@@ -54,7 +60,10 @@ public class AppDriver {
                 break;
             }
             case 2: {
-                System.out.println("Thanks for coming.");
+                System.out.println("Please Enter Desired Username");
+                String username = scanner.nextLine();
+                System.out.println("Please Enter Desired Password");
+                String password = scanner.nextLine();
                 break;
             }
         }

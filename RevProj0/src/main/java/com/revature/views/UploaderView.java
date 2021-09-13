@@ -1,4 +1,4 @@
 package com.revature.views;
 
-public class SongView {
+public class UploaderView {
 }
