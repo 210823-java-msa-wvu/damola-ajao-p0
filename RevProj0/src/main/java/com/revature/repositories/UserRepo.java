@@ -15,30 +15,12 @@ public class UserRepo implements CrudRepository<User>{
 
     @Override
     public User add(User user) {
-//        try (Connection conn = cu.getConnection()) {
-//
-//            String sql = "insert into login_info (userid, username, password, uploader) values ( ?, ?, ?, false);";
-//
-//            PreparedStatement ps = conn.prepareStatement(sql);
-//            ps.setString(1,user.getUsername());
-//            ps.setString(1, user.getPassword());
-//
-//            User created = User this.user;
-//            return created;
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//
-//
-//        return false;
         return null;
     }
 
     public Boolean createAUser(User user){
-                try (Connection conn = cu.getConnection()) {
-
-            String sql = "insert into login_info (userid, username, password, uploader) values ( ?, ?, ?, false);";
+        try (Connection conn = cu.getConnection()) {
+String sql = "insert into login_info (userid, username, password, uploader) values ( ?, ?, ?, false);";
 
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1,user.getUsername());
@@ -46,12 +28,9 @@ public class UserRepo implements CrudRepository<User>{
 
             return ps.executeUpdate() != 0;
 
-
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-
-
+            }
         return false;
     }
 
@@ -86,6 +65,30 @@ public class UserRepo implements CrudRepository<User>{
 //        }
 
         //return users;
+        return null;
+    }
+    public User addUser(String username, String password){
+
+        try(Connection con = cu.getConnection()) {
+String sql = "INSERT INTO login_info ( username, password, uploader) values ( ?, ?,false);";
+
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1,username);
+            ps.setString(2,password);
+
+            ResultSet result = ps.executeQuery();
+
+            if(result.next()){
+                User user = new User();
+                user.setUsername(username);
+                user.setPassword(password);
+
+                return user;
+            }
+        }
+        catch(SQLException e){
+
+        }
         return null;
     }
 
@@ -138,8 +141,11 @@ public class UserRepo implements CrudRepository<User>{
 
             //this is iterating through the records
             while(rs.next()) {
-                users.add(
-                        new User(rs.getInt(1), rs.getString(2), rs.getString(3),rs.getBoolean(4))
+                users.add(new User(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getBoolean(4))
                 );
             }
 

@@ -17,16 +17,19 @@ public class UserServices {
         // that information is stored in our database
         // the repository layer needs to take care of this
 
-        User u = userRepo.getByUsername(username); // more of the Sole Responsibility Principle at work
+        // more of the Sole Responsibility Principle at work
+        User user = userRepo.getByUsername(username);
 
         // check to make sure User object is not null
-        if (u != null) {
+        if (user != null) {
             // now check to make sure it matches
-            if (username.equals(u.getUsername()) && password.equals(u.getPassword())&& u.getUploader() == true) {
+            if (username.equals(user.getUsername()) && password.equals(user.getPassword())
+                    && user.getUploader()) {
                 System.out.println("Uploader Access Granted");
                 return true;
             }
-            else if(username.equals(u.getUsername()) && password.equals(u.getPassword())){
+            else if(username.equals(user.getUsername())
+                    && password.equals(user.getPassword())){
                 System.out.println("User Access Granted");
                 return true;
             }
@@ -36,9 +39,21 @@ public class UserServices {
         }return false;
     }
 
-    List<User> getAllToDos() {
+
+    public User signUp(String username, String password){
+
+         User user = userRepo.getByUsername(username);
+                if(user != null){
+        throw new IllegalArgumentException();
+                }
+            user = userRepo.addUser(username, password);
+                        return user;
+    }
+
+    List<User> getAllUser() {
         return null;
     }
+
 
 //    public List<User> getAllUser(){
 //        List<User> users = UserRepo.

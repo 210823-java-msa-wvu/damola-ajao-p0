@@ -19,7 +19,7 @@ public class SongRepo implements CrudRepository<Song>{
         try (Connection conn = cu.getConnection()) {
 
 
-            String sql = "insert into songs (\"songid\" , \"title\", \"artist\" ,\"genre\", \"release date\") values (?, ?, ?, ?, ?) returning *";
+            String sql = "insert into songs (title, artist ,genre, release date) values (?, ?, ?, ?) returning *";
 
             PreparedStatement ps = conn.prepareStatement(sql);
 //            ps.setString(a.s);
@@ -27,7 +27,6 @@ public class SongRepo implements CrudRepository<Song>{
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                a.setId(rs.getInt("songid"));
                 a.setTitle(rs.getString("title"));
                 a.setArtist(rs.getString("artist"));
                 a.setGenre(rs.getString("genre"));
