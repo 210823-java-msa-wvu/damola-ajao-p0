@@ -20,6 +20,7 @@ public class InitialUserView {
         while (running) {
 
             //Menu Display
+            System.out.println("Welcome to the Music Database \n Please select an option ");
             System.out.println("1) Login");
             System.out.println("2) Sign-up");
             System.out.println("3) Close Program");
@@ -34,31 +35,40 @@ public class InitialUserView {
 
                         System.out.println("Please enter your password: ");
                         String password = scanner.nextLine();
-                        boolean signInResponse = userService.login(username, password);
-
-                        if (signInResponse) {
-                            System.out.println("Successfully logged in...");
-                            //Engage CurrentUserView
-                            // Song listing
-                            // Platform availability
-                            // Playlist view, Playlist make,
-                            // Extra user notification
-                        } else {
+                        //Proper user type gaining
+                        try {
+                            User s = userService.login(username, password);
+                            if (s.getUploader()) {
+                                System.out.println("Successfully logged in...\n Uploader Access Granted");
+                                UploaderView.display(s);
+                            } else {
+                                System.out.println("Successfully logged in...\n User Access Granted");
+                                CurrentUserView.display(s);
+                            }
+                        }catch (IllegalArgumentException e) {
+                            System.out.println("Issue detected");
+                        } catch(NullPointerException e){
                             System.out.println("Credentials do not match. ");
-                            System.out.println("Please do not try again. ");
+                            System.out.println("Please do try again. ");
                         }
+
+
                         break;
                     case "2":
+                        System.out.println("*****User Registration*****");
                         System.out.println("Please Enter Desired Username");
                         String new_username = scanner.nextLine();
                         System.out.println("Please Enter Desired Password");
                         String new_password = scanner.nextLine();
                         try {
-                            User user = userService.signUp(new_username, new_password);
-                            System.out.println("User " + user.getUsername() + " created.");
+                            User sinew = userService.signUp(new_username, new_password);
+                            System.out.println("User " + sinew.getUsername() + "has been created.");
                         } catch (IllegalArgumentException e) {
-                            System.out.println("username is taken.");
-
+                            System.out.println(e.getMessage());
+                        } catch (NullPointerException e){
+                            System.out.println("Username created.");
+                        } catch (Exception e){
+                            e.printStackTrace();
                         }
                         break;
                     case "3":

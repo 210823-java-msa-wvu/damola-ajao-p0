@@ -2,10 +2,17 @@ package com.revature.repositories;
 
 import com.revature.models.Playlist;
 import com.revature.models.User;
+import com.revature.utils.ConnectionUtil;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 public class PlaylistRepo implements CrudRepository<Playlist> {
+
+    ConnectionUtil cu = ConnectionUtil.getConnectionUtil();
+
     //Create
     @Override
     public Playlist add(Playlist playlist) {
@@ -29,6 +36,19 @@ public class PlaylistRepo implements CrudRepository<Playlist> {
 //            e.printStackTrace();
 //        }
 //
+        return null;
+    }
+    public Playlist addPlaylist(Integer userid, String playlist_title, Integer songid ) {
+        try (Connection conn = cu.getConnection()) {
+            String sql = "insert into playlist ( userid , playlist title , songid) values ( ?, ?, ? );";
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+          ps.setInt(1, userid);
+          ps.setString(2, playlist_title);
+          ps.setInt(3, songid);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 

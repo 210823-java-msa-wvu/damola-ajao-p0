@@ -9,7 +9,7 @@ public class Song {
     private String genre;
     private Date releaseDate;
 
-    public Song(){
+    public Song(String title, String artist, String genre, Date release){
 
     }
 //    public Song() {
