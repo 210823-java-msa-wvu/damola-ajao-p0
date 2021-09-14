@@ -41,7 +41,6 @@ public class PlaylistRepo implements CrudRepository<Playlist> {
     public Playlist addPlaylist(Integer userid, String playlist_title, Integer songid ) {
         try (Connection conn = cu.getConnection()) {
             String sql = "insert into playlist ( userid , playlist title , songid) values ( ?, ?, ? );";
-
             PreparedStatement ps = conn.prepareStatement(sql);
           ps.setInt(1, userid);
           ps.setString(2, playlist_title);
@@ -55,6 +54,17 @@ public class PlaylistRepo implements CrudRepository<Playlist> {
     //Read
     @Override
     public Playlist getById(Integer id) {
+        return null;
+    }
+
+    public Playlist getPlayByTitle(String title) {
+        try (Connection conn = cu.getConnection()) {
+            String sql = "select * from playlist where playlist title = ? ";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, title);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 

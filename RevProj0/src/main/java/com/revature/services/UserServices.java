@@ -1,11 +1,12 @@
 package com.revature.services;
 
+import com.revature.models.Playlist;
 import com.revature.models.Song;
 import com.revature.models.User;
+import com.revature.repositories.PlaylistRepo;
 import com.revature.repositories.SongRepo;
 import com.revature.repositories.UserRepo;
 
-import java.util.Date;
 import java.util.List;
 
 // Where we are going to put any business logic needed for the application to function the way we want.
@@ -14,6 +15,7 @@ public class UserServices {
 
     UserRepo userRepo = new UserRepo();
     SongRepo songRepo = new SongRepo();
+    PlaylistRepo playlistRepo = new PlaylistRepo();
 
     public User login(String username, String password) {
 // in order to log in a user, we will need username and password
@@ -53,15 +55,23 @@ public class UserServices {
         }
 
 
-    public Song addSong(String title, String artist, String genre, Date release_date){
+    public Song addSong(String title, String artist, String genre){
         Song song = songRepo.getByTitle(title);
         if(song != null){
             throw new IllegalArgumentException();
         }
-        song = songRepo.addSong(title, artist, genre, release_date);
+        song = songRepo.addSong(title, artist, genre);
         return song;
     }
 
+    public Playlist addPlaylist(Integer userid, String title, Integer songid){
+        Playlist playlist = playlistRepo.getPlayByTitle(title);
+        if(playlist != null){
+            throw new IllegalArgumentException();
+        }
+        playlist.addPlaylist(userid, title, songid);
+        return playlist;
+    }
         List<User> getAllUser() {
         return null;
     }

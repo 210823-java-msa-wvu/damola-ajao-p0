@@ -20,7 +20,7 @@ public class InitialUserView {
         while (running) {
 
             //Menu Display
-            System.out.println("Welcome to the Music Database \n Please select an option ");
+            System.out.println("Welcome to the Music Database \n******************\n******************\nPlease select an option ");
             System.out.println("1) Login");
             System.out.println("2) Sign-up");
             System.out.println("3) Close Program");
@@ -45,11 +45,11 @@ public class InitialUserView {
                                 System.out.println("Successfully logged in...\n User Access Granted");
                                 CurrentUserView.display(s);
                             }
-                        }catch (IllegalArgumentException e) {
-                            System.out.println("Issue detected");
-                        } catch(NullPointerException e){
+                        }catch(NullPointerException e){
                             System.out.println("Credentials do not match. ");
                             System.out.println("Please do try again. ");
+                        }catch (IllegalArgumentException e) {
+                            System.out.println("Issue detected");
                         }
 
 
@@ -78,6 +78,8 @@ public class InitialUserView {
                         System.out.println("Input incorrect, Please try again");
                         break;
                 }
+                scanner.close();
+
             }
         }
     }

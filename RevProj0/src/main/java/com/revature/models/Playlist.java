@@ -47,10 +47,15 @@ public class Playlist {
     @Override
     public String toString() {
         return "Playlist{" +
-                "id=" + id +
                 ", title='" + title + '\'' +
                 ", user=" + user +
                 ", song=" + song +
                 '}';
     }
+
+    public void addPlaylist(Integer userid, String title, Integer songid) {
+    }
+
+    //public void addPlaylist(Integer userid, String title, Integer songid) {
+    
 }

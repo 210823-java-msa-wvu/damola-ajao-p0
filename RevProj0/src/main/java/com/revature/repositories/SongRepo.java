@@ -17,7 +17,7 @@ public class SongRepo implements CrudRepository<Song>{
     //Create
     public Song add(Song a) {
         try (Connection conn = cu.getConnection()) {
-            String sql = "insert into songs (title, artist ,genre, release date) values (?, ?, ?, ?) returning *";
+            String sql = "insert into songs (title, artist ,genre) values (?, ?, ?) returning *";
 
             PreparedStatement ps = conn.prepareStatement(sql);
 //            ps.setString(a.s);
@@ -26,7 +26,6 @@ public class SongRepo implements CrudRepository<Song>{
                 a.setTitle(rs.getString("title"));
                 a.setArtist(rs.getString("artist"));
                 a.setGenre(rs.getString("genre"));
-                a.setReleaseDate(rs.getDate("01-01-2001"));
                 return a;
             }
 
@@ -37,24 +36,22 @@ public class SongRepo implements CrudRepository<Song>{
         return null;
     }
 
-    public Song addSong(String title, String artist, String genre, Date date){
+    public Song addSong(String title, String artist, String genre){
         try (Connection conn = cu.getConnection()) {
-String sql = "insert into songs (title, artist ,genre, release date) values (?, ?, ?, ?) returning *";
+String sql = "insert into songs (title, artist ,genre) values (?, ?, ?) returning *";
 
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, title);
             ps.setString(2, artist);
             ps.setString(3, genre);
-            ps.setDate(1, (java.sql.Date) date);
 
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                Song song = new Song(rs.getString("title"), rs.getString("artist"), rs.getString("genre"), rs.getDate("release"));
+                Song song = new Song(rs.getString("title"), rs.getString("artist"), rs.getString("genre"));
                 song.setTitle(rs.getString("title"));
                 song.setArtist(rs.getString("artist"));
                 song.setGenre(rs.getString("genre"));
-                song.setReleaseDate(rs.getDate("01-01-2001"));
                 return song;
             }
 
@@ -76,12 +73,11 @@ String sql = "insert into songs (title, artist ,genre, release date) values (?, 
         ResultSet rs = ps.executeQuery();
 
         if (rs.next()) {
-            Song a = new Song(rs.getString("title"), rs.getString("artist"), rs.getString("genre"), rs.getDate("release"));
+            Song a = new Song(rs.getString("title"), rs.getString("artist"), rs.getString("genre"));
             a.setId(rs.getInt("songid"));
             a.setTitle(rs.getString("title"));
             a.setArtist(rs.getString("artist"));
             a.setGenre(rs.getString("genre"));
-            a.setReleaseDate(rs.getDate("01-01-2001"));
 
             return a;
         }
@@ -103,11 +99,11 @@ String sql = "insert into songs (title, artist ,genre, release date) values (?, 
         ResultSet rs = ps.executeQuery();
 
         if (rs.next()) {
-            Song a = new Song(rs.getString("title"), rs.getString("artist"), rs.getString("genre"), rs.getDate("release"));
+            Song a = new Song(rs.getString("title"), rs.getString("artist"), rs.getString("genre"));
             a.setTitle(rs.getString("title"));
             a.setArtist(rs.getString("artist"));
             a.setGenre(rs.getString("genre"));
-            a.setReleaseDate(rs.getDate("01-01-2001"));
+
 
             return a;
         }
@@ -134,8 +130,7 @@ String sql = "insert into songs (title, artist ,genre, release date) values (?, 
 
                         rs.getString("title"),
                         rs.getString("artist"),
-                        rs.getString("genre"),
-                        rs.getDate("release")
+                        rs.getString("genre")
                 );
                 songs.add(a);
             }
@@ -165,7 +160,6 @@ String sql = "insert into songs (title, artist ,genre, release date) values (?, 
             ps.setString(1, song.getArtist());
             ps.setString(2, song.getTitle());
             ps.setString(3, song.getGenre());
-            ps.setDate(1, song.getReleaseDate());
 
             ps.execute();
 
@@ -195,4 +189,7 @@ String sql = "insert into songs (title, artist ,genre, release date) values (?, 
     }
 
     }
+
+
+
 }

@@ -34,6 +34,9 @@ public class Song {
         this.releaseDate = releaseDate;
     }
 
+    public Song() {
+
+    }
 
 
     public Integer getId() {
@@ -83,7 +86,8 @@ public class Song {
                 ", title='" + title + '\'' +
                 ", artist='" + artist + '\'' +
                 ", genre='" + genre + '\'' +
-                ", releaseDate='" + releaseDate + '\'' +
                 '}';
     }
+
+//    public void addSong(String title, String artist, String genre, String release_date) {}
 }
