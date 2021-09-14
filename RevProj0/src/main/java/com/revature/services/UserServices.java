@@ -1,5 +1,7 @@
 package com.revature.services;
 
+import com.revature.exceptions.PasswordException;
+import com.revature.exceptions.UsernameException;
 import com.revature.models.Playlist;
 import com.revature.models.Song;
 import com.revature.models.User;
@@ -17,31 +19,30 @@ public class UserServices {
     SongRepo songRepo = new SongRepo();
     PlaylistRepo playlistRepo = new PlaylistRepo();
 
-    public User login(String username, String password) {
-// in order to log in a user, we will need username and password
-// that information is stored in our database
-// the repository layer needs to take care of this
+public User login(String username, String password) throws UsernameException, PasswordException {
+        // in order to log in a user, we will need username and password
+        // that information is stored in our database
+        // the repository layer needs to take care of this
 
-// more of the Sole Responsibility Principle at work
+            // more of the Sole Responsibility Principle at work
         User user = userRepo.getByUsername(username);
-// check to make sure User object is not null
-        if (user != null) {
+            // check to make sure User object is not null
+        if (user == null) {
+            throw new UsernameException();
 // now check to make sure it matches
+        }
             if (username.equals(user.getUsername()) && password.equals(user.getPassword())
                     && user.getUploader()) {
                 System.out.println("Uploader Access Granted");
                 return user;
-            } else if (username.equals(user.getUsername())
+            }if (username.equals(user.getUsername())
                     && password.equals(user.getPassword())) {
                 System.out.println("User Access Granted");
                 return user;
             }
-        } else {
-            System.out.println("Access denied");
             return null;
         }
-        return null;
-    }
+
 
 
     public User signUp(String username, String password) {
@@ -66,10 +67,10 @@ public class UserServices {
 
     public Playlist addPlaylist(Integer userid, String title, Integer songid){
         Playlist playlist = playlistRepo.getPlayByTitle(title);
-        if(playlist != null){
+        if(playlist == null){
             throw new IllegalArgumentException();
         }
-        playlist.addPlaylist(userid, title, songid);
+        playlistRepo.addPlaylist(userid, title, songid);
         return playlist;
     }
         List<User> getAllUser() {

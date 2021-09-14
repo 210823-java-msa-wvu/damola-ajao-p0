@@ -3,6 +3,7 @@ package com.revature.views;
 import com.revature.models.User;
 import com.revature.services.UserServices;
 
+import java.sql.*;
 import java.util.Scanner;
 
 public class CurrentUserView {
@@ -35,6 +36,48 @@ public class CurrentUserView {
                 case "1":
                     //View all Songs
 
+                    System.out.println("-------- MySQL JDBC Connection Testing ------------");
+
+
+                    Connection connection = null;
+
+                    try {
+                        connection = DriverManager
+                                .getConnection("jdbc:postgresql://cohortdatabase.cx5b2xhr3nuf.us-east-2.rds.amazonaws.com:5432/\\\n" +
+                                        "  postgres?currentSchema=musicproject", "damola", "KalIOun89");
+                    } catch (SQLException e) {
+                        for(Throwable ex : e) {
+                            System.err.println("Error occurred " + ex);
+                        }
+                        e.printStackTrace();
+                    }
+
+                    if (connection != null) {
+                        System.out.println("Connected to database!");
+                    } else {
+                        System.out.println("Failed to make connection!");
+                    }
+
+                    try {
+                        Statement stmt = connection.createStatement();
+                        String query = "select * from songs;";
+                        //songs is the table name
+                        ResultSet rs = stmt.executeQuery(query);
+                        while (rs.next()) {
+                            Integer songid = rs.getInt();
+                            String title = rs.getObject(1).toString();
+                            String gender = rs.getObject(2).toString();
+                            System.out.println("Name of the person is " + title + " and his gender is " + gender);
+                            //Person table has name and gender column
+
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                        for(Throwable ex : e) {
+                            System.err.println("Error occurred " + ex);
+                        }
+                        System.out.println("Error in fetching data");
+                    }
                     break;
                 case "2":
                     //View all song platforms

@@ -1,5 +1,6 @@
 package com.revature.views;
 
+import com.revature.exceptions.UsernameException;
 import com.revature.models.User;
 import com.revature.services.UserServices;
 
@@ -50,6 +51,8 @@ public class InitialUserView {
                             System.out.println("Please do try again. ");
                         }catch (IllegalArgumentException e) {
                             System.out.println("Issue detected");
+                        }catch(UsernameException e){
+                            System.out.println("Username not found");
                         }
 
 
@@ -78,9 +81,10 @@ public class InitialUserView {
                         System.out.println("Input incorrect, Please try again");
                         break;
                 }
-                scanner.close();
+
 
             }
+        scanner.close();
         }
     }
 

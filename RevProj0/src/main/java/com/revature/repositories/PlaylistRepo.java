@@ -38,13 +38,14 @@ public class PlaylistRepo implements CrudRepository<Playlist> {
 //
         return null;
     }
-    public Playlist addPlaylist(Integer userid, String playlist_title, Integer songid ) {
+    public Playlist addPlaylist(Integer userid, String playlist_title, Integer Songid ) {
         try (Connection conn = cu.getConnection()) {
             String sql = "insert into playlist ( userid , playlist title , songid) values ( ?, ?, ? );";
             PreparedStatement ps = conn.prepareStatement(sql);
           ps.setInt(1, userid);
           ps.setString(2, playlist_title);
-          ps.setInt(3, songid);
+          ps.setInt(3, Songid);
+//          ps.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
         }
