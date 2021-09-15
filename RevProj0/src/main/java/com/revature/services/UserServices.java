@@ -74,7 +74,7 @@ public User login(String username, String password) throws UsernameException, Pa
         return playlist;
     }
         List<User> getAllUser() {
-        return null;
+        return songRepo.getAllUser();
     }
 
         //View all songs

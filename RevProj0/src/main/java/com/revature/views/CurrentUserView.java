@@ -1,6 +1,9 @@
 package com.revature.views;
 
 import com.revature.models.User;
+import com.revature.repositories.PlatformRepo;
+import com.revature.repositories.PlaylistRepo;
+import com.revature.repositories.SongRepo;
 import com.revature.services.UserServices;
 
 import java.util.Scanner;
@@ -24,9 +27,8 @@ public class CurrentUserView {
             System.out.println("1) View all Songs.");
             System.out.println("2) View all Song Platforms.");
             System.out.println("3) View your Playlists.");
-            System.out.println("4) Make a Playlist.");
-            System.out.println("5) Delete a Playlist.");
-            System.out.println("6) Sign Out.");
+            System.out.println("4) Make and add to Playlist.");
+            System.out.println("5) Sign Out.");
 
             //Input retrieval
             String result = scanner.nextLine();
@@ -34,69 +36,33 @@ public class CurrentUserView {
             switch (result) {
                 case "1":
                     //View all Songs
-
-//                    System.out.println("-------- MySQL JDBC Connection Testing ------------");
-//
-//
-//                    Connection connection = null;
-//
-//                    try {
-//                        connection = DriverManager
-//                                .getConnection("jdbc:postgresql://cohortdatabase.cx5b2xhr3nuf.us-east-2.rds.amazonaws.com:5432/\\\n" +
-//                                        "  postgres?currentSchema=musicproject", "damola", "KalIOun89");
-//                    } catch (SQLException e) {
-//                        for(Throwable ex : e) {
-//                            System.err.println("Error occurred " + ex);
-//                        }
-//                        e.printStackTrace();
-//                    }
-//
-//                    if (connection != null) {
-//                        System.out.println("Connected to database!");
-//                    } else {
-//                        System.out.println("Failed to make connection!");
-//                    }
-//
-//                    try {
-//                        Statement stmt = connection.createStatement();
-//                        String query = "select * from songs;";
-//                        //songs is the table name
-//                        ResultSet rs = stmt.executeQuery(query);
-//                        while (rs.next()) {
-//                            Integer songid = rs.getInt();
-//                            String title = rs.getObject(1).toString();
-//                            String gender = rs.getObject(2).toString();
-//                            System.out.println("Name of the person is " + title + " and his gender is " + gender);
-//                            //Person table has name and gender column
-//
-//                        }
-//                    } catch (SQLException e) {
-//                        e.printStackTrace();
-//                        for(Throwable ex : e) {
-//                            System.err.println("Error occurred " + ex);
-//                        }
-//                        System.out.println("Error in fetching data");
-//                    }
+                    SongRepo songs = new SongRepo();
+                    songs.getAll();
                     break;
                 case "2":
                     //View all song platforms
-
+                    PlatformRepo platforms = new PlatformRepo();
+                    platforms.returnAll();
                     break;
                 case "3":
                     //View Playlist
-
+                    PlaylistRepo playlists = new PlaylistRepo();
+                    playlists.getAll();
                     break;
                 case "4":
                     //Make Playlist
-
+                    System.out.println("Please enter Playlist title");
+                    String play_title = scanner.nextLine();
+                    System.out.println("Please enter song id");
+                    String songbird = scanner.nextLine();
+                    Integer SongId = Integer.parseInt(songbird);
+                    PlaylistRepo newPlaylist = new PlaylistRepo();
+                    newPlaylist.addPlaylist(currentUser.getId(), play_title, SongId);
+                    System.out.println("Playlist " + play_title + " has been made" );
                     break;
                 case "5":
-                    //Delete Playlist
-
-                    break;
-                case "6":
                     //Sign Out
-                    System.out.println("User" + currentUser.getUsername() + "has signed out\n*****************************\n***********************");
+                    System.out.println("User " + currentUser.getUsername() + " has signed out\n*****************************\n***********************");
                     InitialUserView.display();
                     break;
                 default:

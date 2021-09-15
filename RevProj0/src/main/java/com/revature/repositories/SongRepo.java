@@ -4,10 +4,7 @@ import com.revature.models.Song;
 import com.revature.models.User;
 import com.revature.utils.ConnectionUtil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.*;
 
 public class SongRepo implements CrudRepository<Song>{
@@ -48,7 +45,9 @@ String sql = "insert into songs (title, artist ,genre) values (?, ?, ?) returnin
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                Song song = new Song(rs.getString("title"), rs.getString("artist"), rs.getString("genre"));
+                Song song = new Song(rs.getString("title"),
+                rs.getString("artist"),
+                rs.getString("genre"));
                 song.setTitle(rs.getString("title"));
                 song.setArtist(rs.getString("artist"));
                 song.setGenre(rs.getString("genre"));
@@ -63,7 +62,8 @@ String sql = "insert into songs (title, artist ,genre) values (?, ?, ?) returnin
     }
 //Read
     @Override
-    public Song getById(Integer id) { try (Connection conn = cu.getConnection()) {
+    public Song getById(Integer id) {
+        try (Connection conn = cu.getConnection()) {
 
         String sql = "select * from songs where songid = ?";
 
@@ -120,20 +120,22 @@ String sql = "insert into songs (title, artist ,genre) values (?, ?, ?) returnin
         List<Song> songs = new ArrayList<>();
 
         try(Connection conn = cu.getConnection()) {
-            String sql = "select * from songs ";
-            PreparedStatement ps = conn.prepareStatement(sql); // Setting up our SQL statement in this way helps prevent SQL Injection Attacks
+
+            Statement ps = conn.createStatement(); // Setting up our SQL statement in this way helps prevent SQL Injection Attacks
             // ps.setInt(1, ); // parameter Indexes start from 1 (NOT 0)
 
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Song a = new Song(
-
-                        rs.getString("title"),
-                        rs.getString("artist"),
-                        rs.getString("genre")
-                );
-                songs.add(a);
+            ResultSet resultSet = ps.executeQuery("select * from songs");
+            ResultSetMetaData rsmd = resultSet.getMetaData();
+            int columnsNumber = rsmd.getColumnCount();
+            while (resultSet.next()) {
+                for (int i = 1; i <= columnsNumber; i++) {
+                    if (i > 1) System.out.print(",  ");
+                    String columnValue = resultSet.getString(i);
+                    System.out.print(columnValue + " " + rsmd.getColumnName(i));
+                }
+                System.out.println("");
             }
+
             return songs;
 
         } catch (SQLException e) {

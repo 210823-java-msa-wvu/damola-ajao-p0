@@ -4,9 +4,9 @@ public class Playlist {
     private Integer id;
     private String title;
     private User user;
-    private Song song;
+    private int song;
 
-    public Playlist(Integer id, String title, Song song) {
+    public Playlist(Integer id, String title, int song) {
         this.id = id;
         this.title = title;
         this.song = song;
@@ -29,11 +29,12 @@ public class Playlist {
     }
 
     public Song getSong() {
-        return song;
+        return null;
     }
 
-    public void setSong(Song song) {
-        this.song = song;
+    public Object setSong(Song song) {
+//        this.song = song;
+        return null;
     }
 
     public User getUser() {

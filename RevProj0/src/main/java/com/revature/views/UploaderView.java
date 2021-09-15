@@ -1,18 +1,23 @@
 package com.revature.views;
 
 import com.revature.models.User;
+import com.revature.repositories.PlatformRepo;
 import com.revature.repositories.PlaylistRepo;
 import com.revature.repositories.SongRepo;
 import com.revature.services.UserServices;
+import com.revature.utils.ConnectionUtil;
 
+import java.sql.*;
 import java.util.Scanner;
 
 public class UploaderView {
 
     static UserServices userServices = new UserServices();
-    static User Uploader = null;
 
-    public static void display(User Uploader) {
+    static User Uploader = null;
+    ConnectionUtil cu = ConnectionUtil.getConnectionUtil();
+
+    public static void display(User Uploader) throws SQLException {
 
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
@@ -25,9 +30,8 @@ public class UploaderView {
         System.out.println("1) View all Songs.");
         System.out.println("2) View all Song Platforms.");
         System.out.println("3) View all Playlists.");
-        System.out.println("4) Make a Playlist.");
-        System.out.println("5) Delete a Playlist.");
-        System.out.println("6) Sign Out.");
+        System.out.println("4) Make and Add to a Playlist.");
+        System.out.println("5) Sign Out.");
 
         //Input retrieval
         String result = scanner.nextLine();
@@ -48,15 +52,19 @@ public class UploaderView {
                 break;
             case "1":
                 //View all Songs
-
+                SongRepo songs = new SongRepo();
+                songs.getAll();
                 //Print songs
                 break;
             case "2":
                 //View all song platforms
-                //Print songs titles and platforms
+                PlatformRepo platforms = new PlatformRepo();
+                platforms.returnAll();
                 break;
             case "3":
                 //View All Playlist
+                PlaylistRepo playlists = new PlaylistRepo();
+                playlists.getAll();
 
                 break;
             case "4":
@@ -68,14 +76,11 @@ public class UploaderView {
                 Integer SongId = Integer.parseInt(songbird);
                 PlaylistRepo newPlaylist = new PlaylistRepo();
                 newPlaylist.addPlaylist(Uploader.getId(), play_title, SongId);
-                System.out.println("Playlist " + newPlaylist.getPlayByTitle(play_title) + "Has been made" );
+                System.out.println("Playlist " + play_title + " has been made" );
                 break;
             case "5":
-                //Delete Playlist
-                break;
-            case "6":
                 //Sign Out
-                System.out.println("Uploader" + Uploader.getUsername() + "has signed out\n*****************************\n***********************");
+                System.out.println("Uploader " + Uploader.getUsername() + " has signed out\n*****************************\n***********************");
                 InitialUserView.display();
                 break;
             default:

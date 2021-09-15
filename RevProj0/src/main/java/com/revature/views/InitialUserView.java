@@ -4,6 +4,7 @@ import com.revature.exceptions.UsernameException;
 import com.revature.models.User;
 import com.revature.services.UserServices;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 
@@ -43,7 +44,7 @@ public class InitialUserView {
                                 System.out.println("Successfully logged in...\n Uploader Access Granted");
                                 UploaderView.display(s);
                             } else {
-                                System.out.println("Successfully logged in...\n User Access Granted");
+                                System.out.println("Successfully logged in...\n Welcome User");
                                 CurrentUserView.display(s);
                             }
                         }catch(NullPointerException e){
@@ -53,6 +54,8 @@ public class InitialUserView {
                             System.out.println("Issue detected");
                         }catch(UsernameException e){
                             System.out.println("Username not found");
+                        }catch(SQLException e){
+                            System.out.println("Query complication");
                         }
 
 
@@ -65,7 +68,7 @@ public class InitialUserView {
                         String new_password = scanner.nextLine();
                         try {
                             User sinew = userService.signUp(new_username, new_password);
-                            System.out.println("User " + sinew.getUsername() + "has been created.");
+                            System.out.println("User " + sinew.getUsername() + " has been created.");
                         } catch (IllegalArgumentException e) {
                             System.out.println(e.getMessage());
                         } catch (NullPointerException e){

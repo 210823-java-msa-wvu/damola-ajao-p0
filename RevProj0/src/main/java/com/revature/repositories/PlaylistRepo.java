@@ -4,9 +4,8 @@ import com.revature.models.Playlist;
 import com.revature.models.User;
 import com.revature.utils.ConnectionUtil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PlaylistRepo implements CrudRepository<Playlist> {
@@ -38,14 +37,26 @@ public class PlaylistRepo implements CrudRepository<Playlist> {
 //
         return null;
     }
-    public Playlist addPlaylist(Integer userid, String playlist_title, Integer Songid ) {
+    public Playlist addPlaylist(Integer userid, String playlistTitle, Integer songid ) {
         try (Connection conn = cu.getConnection()) {
-            String sql = "insert into playlist ( userid , playlist title , songid) values ( ?, ?, ? );";
-            PreparedStatement ps = conn.prepareStatement(sql);
+String sql = "insert into playlist ( userid , playlistname , songid) values ( ?, ?, ? ) returning *";
+        PreparedStatement ps = conn.prepareStatement(sql);
           ps.setInt(1, userid);
-          ps.setString(2, playlist_title);
-          ps.setInt(3, Songid);
-//          ps.executeQuery();
+          ps.setString(2, playlistTitle);
+          ps.setInt(3, songid);
+
+            ResultSet rs = ps.executeQuery();
+
+            if(rs.next()){
+                Playlist playlist = new Playlist(
+                        rs.getInt("userid"),
+                        rs.getString("playlistname"),
+                        rs.getInt("songid"));
+                playlist.setTitle(playlistTitle);
+                playlist.setSong(playlist.getSong());
+                return playlist;
+
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -71,6 +82,31 @@ public class PlaylistRepo implements CrudRepository<Playlist> {
 
     @Override
     public List<Playlist> getAll() {
+        List<Playlist> playlists = new ArrayList<>();
+
+        try(Connection conn = cu.getConnection()) {
+
+            Statement ps = conn.createStatement(); // Setting up our SQL statement in this way helps prevent SQL Injection Attacks
+            // ps.setInt(1, ); // parameter Indexes start from 1 (NOT 0)
+
+            ResultSet resultSet = ps.executeQuery("select * from playlist");
+            ResultSetMetaData rsmd = resultSet.getMetaData();
+            int columnsNumber = rsmd.getColumnCount();
+            while (resultSet.next()) {
+                for (int i = 1; i <= columnsNumber; i++) {
+                    if (i > 1) System.out.print(",  ");
+                    String columnValue = resultSet.getString(i);
+                    System.out.print(columnValue + " " + rsmd.getColumnName(i));
+                }
+                System.out.println("");
+            }
+
+            return playlists;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
         return null;
     }
 

@@ -4,9 +4,8 @@ import com.revature.models.Platform;
 import com.revature.models.User;
 import com.revature.utils.ConnectionUtil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PlatformRepo implements CrudRepository<Platform> {
@@ -53,12 +52,32 @@ String sql = "insert into platform_availability (songid, itunes ,youtube_music, 
     }
 
     public List<Platform> returnAll(){
-String sql = "select * from musicproject.songs s inner join musicproject.platform_availability p on s.songid = p.songid";
-        try (Connection conn = cu.getConnection()) {
-            PreparedStatement ps = conn.prepareStatement(sql);
+        List<Platform> platforms = new ArrayList<>();
 
-        }catch (SQLException e) {
+        try(Connection conn = cu.getConnection()) {
+
+            Statement ps = conn.createStatement(); // Setting up our SQL statement in this way helps prevent SQL Injection Attacks
+            // ps.setInt(1, ); // parameter Indexes start from 1 (NOT 0)
+
+            ResultSet resultSet = ps.executeQuery("select * from musicproject.songs s\n" +
+                    "inner join musicproject.platform_availability p\n" +
+                    "on s.songid = p.songid ");
+            ResultSetMetaData rsmd = resultSet.getMetaData();
+            int columnsNumber = rsmd.getColumnCount();
+            while (resultSet.next()) {
+                for (int i = 1; i <= columnsNumber; i++) {
+                    if (i > 1) System.out.print(",  ");
+                    String columnValue = resultSet.getString(i);
+                    System.out.print(columnValue + " " + rsmd.getColumnName(i));
+                }
+                System.out.println("");
+            }
+
+            return platforms;
+
+        } catch (SQLException e) {
             e.printStackTrace();
+
         }
         return null;
     }
