@@ -1,4 +1,4 @@
-drop table "Playlist" ;
+drop table "playlist" ;
 drop table "login_info" ;
 drop table "platform_availability" ;
 drop table "songs";
@@ -6,16 +6,15 @@ drop table "songs";
 
 create table "songs"
 (
-	"songid" INT not NULL,
+	"songid" serial not NULL,
 	"title" varchar not Null,
 	"artist" varchar not null,
 	"genre" varchar not null,
-	"release date" date not null,
 	 CONSTRAINT "PK_Song" PRIMARY KEY  ("songid")
 	);
 
 create table "login_info"(
-	"userid" INT not null,
+	"userid" serial not null,
 	"username" varchar not null,
 	"password" varchar not null,
 	"uploader" boolean not null,
@@ -23,9 +22,9 @@ create table "login_info"(
 	);
 	
 create table "playlist"(
-	"playlistid" INT not null,
+	"playlistid" serial not null,
 	"userid" INT not null,
-	"playlist title" varchar not null,
+	"playlistname" varchar not null,
 	"songid" INT not null,
 	CONSTRAINT "PK_Playlist" PRIMARY KEY  ("playlistid")
 	
@@ -33,7 +32,7 @@ create table "playlist"(
 
 
 create table "platform_availability"(
-	"platformid" Int not null,
+	"platformid" serial not null,
 	"songid" INT not NULL,
 	"itunes" boolean not null,
 	"youtube_music" boolean not null,
@@ -75,55 +74,62 @@ ALTER TABLE "playlist" ADD CONSTRAINT "FK_SongId"
   *   songs to add
   */
    select*from "songs";
-INSERT INTO "songs" ("songid" , "title", "artist" ,"genre", "release date") VALUES (1, N'Hot Milk','Snail''s House', 'Electronic', '11-17-2016');
-INSERT INTO "songs" ("songid" , "title", "artist" ,"genre", "release date") VALUES (2, N' STRATEGY','RAVENWORKS', 'Symphonic/Orchestral Jazz', '09-07-2013');
-INSERT INTO "songs" ("songid" , "title", "artist" ,"genre", "release date") VALUES (3, N'Fly Me To The Moon','Frank Sinatra', 'Jazz', '04-01-1954');
-INSERT INTO "songs" ("songid" , "title", "artist" ,"genre", "release date") VALUES (4, N'Pokemon Silver/Gold/Crystal - Surf Theme','Junichi Masuda, Go Ichinose, Morikazu Aoki', 'Soundtrack', '11-21-1999');
-INSERT INTO "songs" ("songid" , "title", "artist" ,"genre", "release date") VALUES (5, N'Radiant Emerald: Diamond In The Sky','
-Richard Jacques', 'Pop', '11-18-1997');
-INSERT INTO "songs" ("songid" , "title", "artist" ,"genre", "release date") VALUES (6, N'Radical City: Living In The City','Richard Jacques', 'Pop', '11-18-1997');
-INSERT INTO "songs" ("songid" , "title", "artist" ,"genre", "release date") VALUES (7, N'Myths You Forgot','Camellia', 'Hard Techno', '07-11-2021');
-INSERT INTO "songs" ("songid" , "title", "artist" ,"genre", "release date") VALUES (8, N'FM Synthesis Experiment','Camellia', 'Electronic', '12-30-2018');
-INSERT INTO "songs" ("songid" , "title", "artist" ,"genre", "release date") VALUES (9, N'MEGANTO METEOR','Camellia', 'Electronic', '07-16-2016');
-INSERT INTO "songs" ("songid" , "title", "artist" ,"genre", "release date") VALUES (10, N'Loading','Ryo Nakamura', 'Electronic', '04-24-2021');
-INSERT INTO "songs" ("songid" , "title", "artist" ,"genre", "release date") VALUES (11, N'Necessary Discrepancy','Daisuke Ishiwatari', 'Rock', '06-08-2021');
-INSERT INTO "songs" ("songid" , "title", "artist" ,"genre", "release date") VALUES (12, N'Super Sonic Racing','Richard Jacques', 'Pop', '11-18-1997');
-INSERT INTO "songs" ("songid" , "title", "artist" ,"genre", "release date") VALUES (13, N'Topaz ','Tatsh', 'Electronic', '10-27-2011');
-INSERT INTO "songs" ("songid" , "title", "artist" ,"genre", "release date") VALUES (14, N'Venus <Another Phase Mix>','Tatsh', 'Electronic', '10-27-2011');
-INSERT INTO "songs" ("songid" , "title", "artist" ,"genre", "release date") VALUES (15, N'Get Busy Living','Gold Fish', 'Electronic', '09-20-2010');
+INSERT INTO "songs" ( "title", "artist" ,"genre") VALUES (N'Hot Milk','Snail''s House', 'Electronic');
+INSERT INTO "songs" ( "title", "artist" ,"genre") VALUES (N' STRATEGY','RAVENWORKS', 'Symphonic/Orchestral Jazz');
+INSERT INTO "songs" ( "title", "artist" ,"genre") VALUES (N'Fly Me To The Moon','Frank Sinatra', 'Jazz');
+INSERT INTO "songs" ( "title", "artist" ,"genre") VALUES (N'Pokemon Silver/Gold/Crystal - Surf Theme','Junichi Masuda, Go Ichinose, Morikazu Aoki', 'Soundtrack');
+INSERT INTO "songs" ( "title", "artist" ,"genre") VALUES (N'Radiant Emerald: Diamond In The Sky','
+Richard Jacques', 'Pop');
+INSERT INTO "songs" ( "title", "artist" ,"genre") VALUES (N'Radical City: Living In The City','Richard Jacques', 'Pop');
+INSERT INTO "songs" ( "title", "artist" ,"genre") VALUES (N'Myths You Forgot','Camellia', 'Hard Techno');
+INSERT INTO "songs" ( "title", "artist" ,"genre") VALUES (N'FM Synthesis Experiment','Camellia', 'Electronic');
+INSERT INTO "songs" ( "title", "artist" ,"genre") VALUES (N'MEGANTO METEOR','Camellia', 'Electronic');
+INSERT INTO "songs" ( "title", "artist" ,"genre") VALUES (N'Loading','Ryo Nakamura', 'Electronic');
+INSERT INTO "songs" ( "title", "artist" ,"genre") VALUES (N'Necessary Discrepancy','Daisuke Ishiwatari', 'Rock');
+INSERT INTO "songs" ( "title", "artist" ,"genre") VALUES (N'Super Sonic Racing','Richard Jacques', 'Pop');
+INSERT INTO "songs" ( "title", "artist" ,"genre") VALUES (N'Topaz ','Tatsh', 'Electronic');
+INSERT INTO "songs" ( "title", "artist" ,"genre") VALUES (N'Venus <Another Phase Mix>','Tatsh', 'Electronic');
+INSERT INTO "songs" ( "title", "artist" ,"genre") VALUES (N'Get Busy Living','Gold Fish', 'Electronic');
 
 select*from "platform_availability";
-INSERT INTO "platform_availability" ("platformid" , "songid", "itunes" ,"youtube_music", "soundcloud", "spotify", "youtube_rip") values (1,1,true,true,true,true,true);
-INSERT INTO "platform_availability" ("platformid" , "songid", "itunes" ,"youtube_music", "soundcloud", "spotify", "youtube_rip") values (2,2,false,false,true,false,true);
-INSERT INTO "platform_availability" ("platformid" , "songid", "itunes" ,"youtube_music", "soundcloud", "spotify", "youtube_rip") values (3,3,true,true,true,true,true);
-INSERT INTO "platform_availability" ("platformid" , "songid", "itunes" ,"youtube_music", "soundcloud", "spotify", "youtube_rip") values (4,4,true,true,true,true,true);
-INSERT INTO "platform_availability" ("platformid" , "songid", "itunes" ,"youtube_music", "soundcloud", "spotify", "youtube_rip") values (5,5,true,true,true,true,true);
-INSERT INTO "platform_availability" ("platformid" , "songid", "itunes" ,"youtube_music", "soundcloud", "spotify", "youtube_rip") values (6,6,true,true,true,true,true);
-INSERT INTO "platform_availability" ("platformid" , "songid", "itunes" ,"youtube_music", "soundcloud", "spotify", "youtube_rip") values (7,7,true,true,true,true,true);
-INSERT INTO "platform_availability" ("platformid" , "songid", "itunes" ,"youtube_music", "soundcloud", "spotify", "youtube_rip") values (8,8,true,true,true,true,true);
-INSERT INTO "platform_availability" ("platformid" , "songid", "itunes" ,"youtube_music", "soundcloud", "spotify", "youtube_rip") values (9,9,false,true,true,true,true);
-INSERT INTO "platform_availability" ("platformid" , "songid", "itunes" ,"youtube_music", "soundcloud", "spotify", "youtube_rip") values (10,10,false,false,true,false,true);
-INSERT INTO "platform_availability" ("platformid" , "songid", "itunes" ,"youtube_music", "soundcloud", "spotify", "youtube_rip") values (11,11,true,true,true,true,true);
-INSERT INTO "platform_availability" ("platformid" , "songid", "itunes" ,"youtube_music", "soundcloud", "spotify", "youtube_rip") values (12,12,true,true,true,true,true);
-INSERT INTO "platform_availability" ("platformid" , "songid", "itunes" ,"youtube_music", "soundcloud", "spotify", "youtube_rip") values (13,13,true,true,true,true,true);
-INSERT INTO "platform_availability" ("platformid" , "songid", "itunes" ,"youtube_music", "soundcloud", "spotify", "youtube_rip") values (14,14,true,true,true,true,true);
-INSERT INTO "platform_availability" ("platformid" , "songid", "itunes" ,"youtube_music", "soundcloud", "spotify", "youtube_rip") values (15,15,true,true,true,true,true);
+INSERT INTO "platform_availability" ("songid", "itunes" ,"youtube_music", "soundcloud", "spotify", "youtube_rip") values (1,true,true,true,true,true);
+INSERT INTO "platform_availability" ("songid", "itunes" ,"youtube_music", "soundcloud", "spotify", "youtube_rip") values (2,false,false,true,false,true);
+INSERT INTO "platform_availability" ("songid", "itunes" ,"youtube_music", "soundcloud", "spotify", "youtube_rip") values (3,true,true,true,true,true);
+INSERT INTO "platform_availability" ("songid", "itunes" ,"youtube_music", "soundcloud", "spotify", "youtube_rip") values (4,true,true,true,true,true);
+INSERT INTO "platform_availability" ("songid", "itunes" ,"youtube_music", "soundcloud", "spotify", "youtube_rip") values (5,true,true,true,true,true);
+INSERT INTO "platform_availability" ("songid", "itunes" ,"youtube_music", "soundcloud", "spotify", "youtube_rip") values (6,true,true,true,true,true);
+INSERT INTO "platform_availability" ("songid", "itunes" ,"youtube_music", "soundcloud", "spotify", "youtube_rip") values (7,true,true,true,true,true);
+INSERT INTO "platform_availability" ("songid", "itunes" ,"youtube_music", "soundcloud", "spotify", "youtube_rip") values (8,true,true,true,true,true);
+INSERT INTO "platform_availability" ("songid", "itunes" ,"youtube_music", "soundcloud", "spotify", "youtube_rip") values (9,false,true,true,true,true);
+INSERT INTO "platform_availability" ("songid", "itunes" ,"youtube_music", "soundcloud", "spotify", "youtube_rip") values (10,false,false,true,false,true);
+INSERT INTO "platform_availability" ("songid", "itunes" ,"youtube_music", "soundcloud", "spotify", "youtube_rip") values (11,true,true,true,true,true);
+INSERT INTO "platform_availability" ("songid", "itunes" ,"youtube_music", "soundcloud", "spotify", "youtube_rip") values (12,true,true,true,true,true);
+INSERT INTO "platform_availability" ("songid", "itunes" ,"youtube_music", "soundcloud", "spotify", "youtube_rip") values (13,true,true,true,true,true);
+INSERT INTO "platform_availability" ("songid", "itunes" ,"youtube_music", "soundcloud", "spotify", "youtube_rip") values (14,true,true,true,true,true);
+INSERT INTO "platform_availability" ("songid", "itunes" ,"youtube_music", "soundcloud", "spotify", "youtube_rip") values (15,true,true,true,true,true);
 
 select * from "login_info";
-INSERT INTO "login_info" ("userid", "username", "password", "uploader") values (1,'jazzman', 'rockisrolling',false);
-INSERT INTO "login_info" ("userid", "username", "password", "uploader") values (2,'supahsonic', 'blueisbest',false);
-INSERT INTO "login_info" ("userid", "username", "password", "uploader") values (3,'ModAuthority', 'whenindoubtrip',true);
+INSERT INTO "login_info" ( "username", "password", "uploader") values ('jazzman', 'rockisrolling',false);
+INSERT INTO "login_info" ( "username", "password", "uploader") values ('supahsonic', 'blueisbest',false);
+INSERT INTO "login_info" ( "username", "password", "uploader") values ('ModAuthority', 'whenindoubtrip',true);
+INSERT INTO "login_info" ( "username", "password", "uploader") values ('alpha', 'omega',true);
 delete from login_info ;
 
-select * from "playlist" ;
-INSERT INTO "playlist" ("playlistid" , "userid" , "playlist title" , "songid") values (1, 2, 'Racing Tunes', 5 );
-INSERT INTO "playlist" ("playlistid" , "userid" , "playlist title" , "songid") values (2, 2, 'Racing Tunes', 6 );
-INSERT INTO "playlist" ("playlistid" , "userid" , "playlist title" , "songid") values (3, 2, 'Racing Tunes', 12 );
+select * from "playlist" where "playlistname" = 'Jazz stuff' ;
+select * from playlist;
+INSERT INTO "playlist" ( "userid" , "playlistname" , "songid") values ( 2, 'Racing Tunes', 5 );
+INSERT INTO "playlist" ( "userid" , "playlistname" , "songid") values ( 2, 'Racing Tunes', 6 );
+INSERT INTO "playlist" ( "userid" , "playlistname" , "songid") values ( 2, 'Racing Tunes', 12 );
+INSERT INTO "playlist" ( "userid" , "playlistname" , "songid") values ( 1, 'Jazz stuff', 3 );
+INSERT INTO "playlist" ( "userid" , "playlistname" , "songid") values ( 1, 'Jazz stuff', 2 );
+INSERT INTO "playlist" ( "userid" , "playlistname" , "songid") values ( 1, 'Jazz stuff', 15 );
+insert into "playlist" ( "userid" , "playlistname" , "songid") values ( 3, 'Tepid', 13 )
 
-INSERT INTO "playlist" ("playlistid" , "userid" , "playlist title" , "songid") values (3, 2, 'Racing Tunes', 12 );
+
 
 select * from musicproject.songs s
 inner join musicproject.platform_availability p
 on s.songid = p.songid 
+
 
 
